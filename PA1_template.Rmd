@@ -34,7 +34,7 @@ str(activity)
 
 The date in the activity dataset is in char format. Thus, we changed it to date format using as.Date():
 ```{r echo=TRUE}
-activity$date = as.Date(activity$date)
+activity$date = as.Date(activity$date,"%Y-%m-%d")
 ```
 
 Check on the summary of the data again. The date is now in date format:
@@ -43,7 +43,7 @@ str(activity)
 ```
 
 ###What is mean total number of steps taken per day?
-For this part of the assignment, we aregoing to ignore the missing values in the dataset.We are interested in calculating the total number of steps taken per day. We can count the sum of the steps taken per day by using the aggregate function.
+For this part of the assignment, we are going to ignore the missing values in the dataset.We are interested in calculating the total number of steps taken per day. We can count the sum of the steps taken per day by using the aggregate function.
 Rename the aggregate data (per_day) into date and total_steps:
 
 ```{r echo=TRUE}
@@ -54,7 +54,7 @@ names(per_day)<- c("date","total_steps")
 
 Let's have a look at the graph of the total number of steps taken each day (in histogram):
 ```{r echo=TRUE}
-hist(per_day$total_steps, breaks =10,  main ="Total Number of Steps Taken Daily (remove NA)",xlab ="Total Number of Steps Taken Daily", col ="Red")
+hist(per_day$total_steps,  main ="Total Number of Steps Taken Daily (remove NA)",xlab ="Total Number of Steps Taken Daily", col ="Red")
 ```
 
 The mean of the total number of steps taken per day is **10766.19** and 
@@ -70,7 +70,7 @@ In order to produce a time series plot of the 5-minute interval (x-axis) and the
 The aggregate data is renamed to steps and interval_mean:
 ```{r echo=TRUE}
 by_interval <-aggregate(activity_noNA$steps, list(activity_noNA$interval),mean)
-names(by_interval)<- c("steps","interval_mean")
+names(by_interval)<- c("interval","steps_mean")
 plot(by_interval, type ="l", col = "Blue", 
      main ="Average Number of Steps Taken by the 5-minute interval", 
      xlab ="5-minute interval",ylab="Average Number of Steps Taken")
@@ -78,7 +78,7 @@ plot(by_interval, type ="l", col = "Blue",
 
 The maximum number of steps of Which 5-minute interval, on average across all the days in the dataset is **835**:
 ```{r echo=TRUE}
-max_steps <- by_interval[which.max(by_interval$interval),"steps"]
+max_steps <- by_interval[which.max(by_interval$steps_mean),"interval"]
 max_steps
 ```
 
@@ -112,13 +112,12 @@ hist(per_day_rep$steps, breaks =10, main="Total Number of Steps Taken Daily \n(N
      xlab ="Total Number of Steps Taken Daily", col ="Red")
 ```
 
-The mean of the total number of steps taken per day is **10766.19** and the median of the total number of steps taken per day is **10766.19** also:
+The mean of the total number of steps taken per day is **10766.19** and the median of the total number of steps taken per day is **10766**:
 ```{r echo=TRUE}
 na_rp_mean <-mean(per_day_rep$steps)
 na_rp_median <-median(per_day_rep$steps)
-na_rp_mean
-na_rp_median
 ```
+
 
 The **mean** remained the **same** for both but the **median** is **higher** for the data where NA is being replaced by the mean value.
 

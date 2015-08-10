@@ -54,7 +54,7 @@ names(per_day)<- c("date","total_steps")
 
 Let's have a look at the graph of the total number of steps taken each day (in histogram):
 ```{r echo=TRUE}
-hist(per_day$total_steps,  main ="Total Number of Steps Taken Daily (remove NA)",xlab ="Total Number of Steps Taken Daily", col ="Red")
+hist(per_day$total_steps,breaks =10,  main ="Total Number of Steps Taken Daily (remove NA)",xlab ="Total Number of Steps Taken Daily", col ="Red")
 ```
 
 The mean of the total number of steps taken per day is **10766.19** and 
